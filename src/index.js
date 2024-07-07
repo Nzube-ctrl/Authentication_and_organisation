@@ -14,6 +14,14 @@ app.use(express.json());
 app.use("/api/users", userRoute);
 app.use("/api/organisations", organisationRoute);
 
+app.get("/", (req, res) => {
+  res.json({ message: "Welcome to the API" });
+});
+
+app.all("*", (req, res) => {
+  res.status(404).json({ message: "Page Not Found" });
+});
+
 // Sync models
 sequelize
   .sync()
