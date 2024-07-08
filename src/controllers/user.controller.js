@@ -7,18 +7,13 @@ const registerUser = async (req, res) => {
   const { firstName, lastName, email, password, phone } = req.body;
 
   try {
-    // Check if user already exists
     const existingUser = await User.findOne({ where: { email } });
     if (existingUser) {
       return res.status(422).json({
         errors: [{ field: "email", message: "Email already exists" }],
       });
     }
-
-    // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
-
-    // Create the user
     const user = await User.create({
       firstName,
       lastName,
@@ -72,7 +67,6 @@ const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    // Find the user
     const user = await User.findOne({ where: { email } });
     if (!user) {
       return res.status(401).json({
@@ -81,8 +75,6 @@ const loginUser = async (req, res) => {
         statusCode: 401,
       });
     }
-
-    // Check the password
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res.status(401).json({

@@ -8,8 +8,8 @@ import { protect } from "../middlewares/authMiddleware.js";
 
 const UserRoute = express.Router();
 
-UserRoute.post("/register", registerUser);
-UserRoute.post("/login", loginUser);
+UserRoute.post("/auth/register", registerUser);
+UserRoute.post("/auth/login", loginUser);
 UserRoute.get("/:id", protect, getUser);
 
 export default UserRoute;
